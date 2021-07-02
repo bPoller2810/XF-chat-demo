@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ctrl"
+             BackgroundColor="{Binding IsLight, Converter={StaticResource ThemeBgColorConverter}}"
+             x:Class="ctrl.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ThemeBgColorConverter x:Key="ThemeBgColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:Vm x:Name="_vm" />
+    </ContentPage.BindingContext>
+    <Grid RowDefinitions="*,Auto">
+
+        <CollectionView ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <local:ChatCtrl IsMine="{Binding Key}"
+                                    Text="{Binding Value}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout Grid.Row="1" Padding="5,5,5,30"
+                     Orientation="Horizontal"
+                     Spacing="10">
+
+            <StackLayout Orientation="Horizontal"
+                         Spacing="0">
+                <CheckBox IsChecked="{Binding IsLight}" />
+                <Label Text="Is Light"
+                       VerticalTextAlignment="Center"
+                       TextColor="Black" />
+            </StackLayout>
+
+            <Button Text="Add Remote"
+                    BackgroundColor="LightCoral"
+                    Command="{Binding AddMsg}"
+                    CommandParameter="false" />
+
+            <Button Text="Add Message"
+                    BackgroundColor="LightGreen"
+                    Command="{Binding AddMsg}"
+                    CommandParameter="true" />
+
+
+        </StackLayout>
+
+
+    </Grid>
+
+
+</ContentPage>
